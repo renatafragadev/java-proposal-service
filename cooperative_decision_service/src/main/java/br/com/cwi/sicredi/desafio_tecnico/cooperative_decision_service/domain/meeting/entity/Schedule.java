@@ -45,4 +45,13 @@ public class Schedule implements Serializable {
     public int hashCode() {
         return Objects.hash(title);
     }
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
