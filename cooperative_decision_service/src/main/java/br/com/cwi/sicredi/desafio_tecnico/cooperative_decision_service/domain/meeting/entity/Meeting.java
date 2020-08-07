@@ -35,4 +35,14 @@ public class Meeting implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "meeting_id")
     private Set<Schedule> schedules = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Meeting{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", eventDate=" + eventDate +
+                '}';
+    }
 }

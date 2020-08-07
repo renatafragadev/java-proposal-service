@@ -10,7 +10,7 @@
    `id` bigint NOT NULL AUTO_INCREMENT,
    `title` varchar(100) NOT NULL,
    `description` varchar(255) DEFAULT NULL,
-   `meeting_id` bigint NOT NULL,
+   `meeting_id` bigint NULL,
    PRIMARY KEY (`id`),
    KEY `FK_schedule_meeting` (`meeting_id`),
    CONSTRAINT `FK_schedule_meeting` FOREIGN KEY (`meeting_id`) REFERENCES `meeting` (`id`)

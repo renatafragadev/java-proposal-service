@@ -1,9 +1,13 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.enumerator;
 
 public enum  I18nMessage {
-    CONFLICT("{error.resource.not_found}"),
-    NOT_FOUND("{error.resource.conflict}"),
-    SERVICE_UNAVAILABLE("{error.resource.service_unavailable}");
+    CONFLICT("error.resource.conflict"),
+    NOT_FOUND("error.resource.not_found"),
+    SERVICE_UNAVAILABLE("error.resource.service_unavailable"),
+    SESSION_ALREADY_EXISTS("error.business.session.exists"),
+    START_DATETIME_BEFORE_NOW("error.business.session.start_date_time.before_now"),
+    START_DATETIME_BEFORE_MEETING("error.business.session.start_date_time.before_meeting"),
+    END_DATETIME_BEFORE_START_DATETIME("error.business.session.end_date_time.before_start_date");
 
     private final String key;
 

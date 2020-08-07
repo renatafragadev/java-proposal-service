@@ -7,6 +7,7 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -78,5 +79,17 @@ public abstract class AbstractHttpExceptionHandler extends ResponseEntityExcepti
             }
         }
         return new ResponseEntity<>(new HttpErrorResponse(details), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+                                                                  HttpHeaders headers, HttpStatus status,
+                                                                  WebRequest request) {
+        HttpErrorResponseDetail detail = HttpErrorResponseDetail.builder()
+                .message(ex.getLocalizedMessage())
+                .code(ErrorCode.MISSING_FIELD).build();
+
+        return new ResponseEntity<>(new HttpErrorResponse(Collections.singletonList(detail)), new HttpHeaders(),
+                HttpStatus.BAD_REQUEST);
     }
 }

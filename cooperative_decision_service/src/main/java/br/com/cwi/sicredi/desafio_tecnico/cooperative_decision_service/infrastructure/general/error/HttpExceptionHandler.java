@@ -4,6 +4,7 @@ import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastru
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.error.enumerator.ErrorCode;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.error.pojo.HttpErrorResponse;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.error.pojo.HttpErrorResponseDetail;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.exception.BusinessException;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.exception.ConflictException;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.exception.InternalServerErrorException;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.exception.NoContentException;
@@ -61,6 +62,17 @@ public class HttpExceptionHandler extends AbstractHttpExceptionHandler {
 
         return new ResponseEntity<>(new HttpErrorResponse(Collections.singletonList(detail)), new HttpHeaders(),
                 HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({BusinessException.class})
+    public ResponseEntity<Object> handleBusinessException(BusinessException ex) {
+        HttpErrorResponseDetail detail = HttpErrorResponseDetail.builder()
+                .resource(ex.getResource())
+                .message(messageComponent.get(ex.getMessage()))
+                .code(ErrorCode.INVALID).build();
+
+        return new ResponseEntity<>(new HttpErrorResponse(Collections.singletonList(detail)), new HttpHeaders(),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({ServiceUnavailableException.class})
