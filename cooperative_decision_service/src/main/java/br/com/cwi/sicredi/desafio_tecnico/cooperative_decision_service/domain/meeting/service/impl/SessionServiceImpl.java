@@ -81,11 +81,14 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void validateIfCurrentSession(Session session) {
-        log.info("Service - validateIfCurrentSession | session: {}", session);
+    public void validateIfCurrent(Session session) {
+        log.info("Service - validateIfCurrent | session: {}", session);
 
-        if (session.getEndDateTime().isBefore(LocalDateTime.now())) {
-            throw new BusinessException(I18nMessage.SESSION_ENDED.getKey(), Session.class.getSimpleName());
+        LocalDateTime dateTimeWithoutSeconds = LocalDateTime.now().withSecond(0).withNano(0);
+
+        if (session.getStartDateTime().isAfter(dateTimeWithoutSeconds) ||
+                session.getEndDateTime().isBefore(dateTimeWithoutSeconds)) {
+            throw new BusinessException(I18nMessage.SESSION_UNAVAILABLE.getKey(), Session.class.getSimpleName());
         }
     }
 }

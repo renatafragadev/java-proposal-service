@@ -36,6 +36,9 @@ public class Meeting implements Serializable {
     @JoinColumn(name = "meeting_id")
     private Set<Schedule> schedules = new HashSet<>();
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "meeting")
+    private Set<MeetingHasAssociate> associates = new HashSet<>();
+
     @Override
     public String toString() {
         return "Meeting{" +

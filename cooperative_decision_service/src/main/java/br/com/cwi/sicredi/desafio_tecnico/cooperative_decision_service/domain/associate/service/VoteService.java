@@ -10,5 +10,7 @@ public interface VoteService {
 
     Vote findById(Long id);
 
-    Page<Vote> find(Long associateId, Long sessionId, Pageable pageable);
+    Page<Vote> findByAssociateId(Long associateId, Pageable pageable);
+
+    Page<Vote> findBySessionId(Long sessionId, Pageable pageable);
 }

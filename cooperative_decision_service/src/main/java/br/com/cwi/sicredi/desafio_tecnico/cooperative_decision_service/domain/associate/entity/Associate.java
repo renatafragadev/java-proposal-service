@@ -1,6 +1,6 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity;
 
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.enumerator.DocumentType;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.MeetingHasAssociate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,9 +29,6 @@ public class Associate implements Serializable {
 
     private String document;
 
-    @Enumerated(EnumType.STRING)
-    private DocumentType documentType;
-
     private String name;
 
     private LocalDate birthDate;
@@ -41,12 +38,14 @@ public class Associate implements Serializable {
     @OneToMany(mappedBy = "associate")
     private Set<Vote> votes = new HashSet<>();
 
+    @OneToMany(mappedBy = "associate")
+    private Set<MeetingHasAssociate> meetings = new HashSet<>();
+
     @Override
     public String toString() {
         return "Associate{" +
                 "id=" + id +
                 ", document='" + document + '\'' +
-                ", documentType=" + documentType +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
                 ", enabled=" + enabled +

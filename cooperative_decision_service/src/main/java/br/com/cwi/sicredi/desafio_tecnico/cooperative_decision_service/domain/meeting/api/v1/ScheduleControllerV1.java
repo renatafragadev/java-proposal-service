@@ -1,6 +1,6 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.v1;
 
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.v1.request.ScheduleRequest;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.request.ScheduleRequest;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.converter.ScheduleConverter;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Meeting;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Schedule;
@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/v1/meetings/{meetingId}/schedules", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ScheduleController {
+public class ScheduleControllerV1 {
 
     private final MeetingService meetingService;
     private final ScheduleService scheduleService;

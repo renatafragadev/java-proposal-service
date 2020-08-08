@@ -3,7 +3,10 @@ package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.a
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Associate;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.repository.AssociateRepository;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.service.AssociateService;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Meeting;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.component.EntityValidator;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.enumerator.I18nMessage;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -49,5 +52,24 @@ public class AssociateServiceImpl implements AssociateService {
         entityValidator.isEmpty(associatePage.isEmpty());
 
         return associatePage;
+    }
+
+    @Override
+    public void validateIfEnabled(Associate associate) {
+        log.info("Service - validateIfEnable | associate: {}", associate);
+
+        if (!associate.getEnabled()) {
+            throw new BusinessException(I18nMessage.ASSOCIATE_DISABLED.getKey(), Associate.class.getSimpleName());
+        }
+    }
+
+    @Override
+    public void validateIfInvitedMeeting(Associate associate, Meeting meeting) {
+        log.info("Service - validateIfInvitedMeeting | associate: {} | meeting: {}", associate, meeting);
+
+        if (associate.getMeetings().stream().noneMatch(m -> m.getMeeting().getId().equals(meeting.getId()))) {
+            throw new BusinessException(I18nMessage.ASSOCIATE_NOT_GUEST_MEETING.getKey(), Associate.class
+                    .getSimpleName());
+        }
     }
 }

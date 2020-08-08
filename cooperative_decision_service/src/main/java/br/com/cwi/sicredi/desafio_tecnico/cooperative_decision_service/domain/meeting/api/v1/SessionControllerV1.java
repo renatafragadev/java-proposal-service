@@ -1,6 +1,6 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.v1;
 
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.v1.request.SessionRequest;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.request.SessionRequest;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.converter.SessionConverter;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Session;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.SessionService;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/v1/sessions", produces = MediaType.APPLICATION_JSON_VALUE)
-public class SessionController {
+public class SessionControllerV1 {
 
     private final SessionService sessionService;
 

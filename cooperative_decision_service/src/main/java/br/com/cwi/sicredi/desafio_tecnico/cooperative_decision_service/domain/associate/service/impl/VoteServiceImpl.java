@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.specification.VoteSpecification.byAssociateId;
+import static br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.specification.VoteSpecification.bySessionId;
+import static org.springframework.data.jpa.domain.Specification.where;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -37,14 +41,26 @@ public class VoteServiceImpl implements VoteService {
         if (voteRepository.existsByAssociateIdAndSessionId(vote.getAssociate().getId(), vote.getSession().getId())) {
             throw new BusinessException(I18nMessage.VOTE_ALREADY_EXITS.getKey(), Vote.class.getSimpleName());
         }
-
-        Session session = sessionService.findById(vote.getSession().getId());
-        sessionService.validateIfCurrentSession(session);
-
-        vote.setSession(session);
-        vote.setAssociate(associateService.findById(vote.getAssociate().getId()));
+        validateSession(vote);
+        validateAssociate(vote);
 
         return voteRepository.save(vote);
+    }
+
+    private void validateSession(Vote vote) {
+        Session session = sessionService.findById(vote.getSession().getId());
+        sessionService.validateIfCurrent(session);
+
+        vote.setSession(session);
+    }
+
+    private void validateAssociate(Vote vote) {
+        Associate associate = associateService.findById(vote.getAssociate().getId());
+
+        associateService.validateIfEnabled(associate);
+        associateService.validateIfInvitedMeeting(associate, vote.getSession().getSchedule().getMeeting());
+
+        vote.setAssociate(associate);
     }
 
     @Override
@@ -58,13 +74,22 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public Page<Vote> find(Long associateId, Long sessionId, Pageable pageable) {
-        log.info("Service - find | associateId: {} | sessionId: {} | pageable: {}", associateId, sessionId, pageable);
+    public Page<Vote> findByAssociateId(Long associateId, Pageable pageable) {
+        log.info("Service - findByAssociateId | associateId: {} | pageable: {}", associateId, pageable);
 
+        Page<Vote> votePage = voteRepository.findAll(where(byAssociateId(associateId)), pageable);
+        entityValidator.isEmpty(votePage.isEmpty());
 
-
-        return null;
+        return votePage;
     }
 
+    @Override
+    public Page<Vote> findBySessionId(Long sessionId, Pageable pageable) {
+        log.info("Service - findBySessionId | sessionId: {} | pageable: {}", sessionId, pageable);
 
+        Page<Vote> votePage = voteRepository.findAll(where(bySessionId(sessionId)), pageable);
+        entityValidator.isEmpty(votePage.isEmpty());
+
+        return votePage;
+    }
 }

@@ -12,5 +12,5 @@ public interface SessionService {
 
     Page<Session> findAll(Pageable pageable);
 
-    void validateIfCurrentSession(Session session);
+    void validateIfCurrent(Session session);
 }
