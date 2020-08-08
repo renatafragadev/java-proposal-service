@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 
 @Slf4j
@@ -25,7 +27,18 @@ public class MeetingServiceImpl implements MeetingService {
     public Meeting create(Meeting meeting) {
         log.info("Service - create | meeting: {}", meeting);
 
+       validateTitleAndEventDate(meeting);
+
         return meetingRepository.save(meeting);
+    }
+
+    private void validateTitleAndEventDate(Meeting meeting) {
+        LocalDateTime startEventDate = LocalDateTime.of(meeting.getEventDate().toLocalDate(), LocalTime.MIDNIGHT);
+        LocalDateTime endEventDate = LocalDateTime.of(meeting.getEventDate().toLocalDate(), LocalTime.MAX);
+
+        if (meetingRepository.existsByTitleAndEventDateBetween(meeting.getTitle(), startEventDate, endEventDate)) {
+            entityValidator.isConflicting(true, Meeting.class.getSimpleName(), "title,eventDate");
+        }
     }
 
     @Override

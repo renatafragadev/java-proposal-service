@@ -11,5 +11,7 @@ public interface ScheduleService {
 
     Schedule findById(Long scheduleId);
 
-    Page<Schedule> findAll(Pageable pageable);
+    Schedule findByMeetingIdAndId(Long meetingId, Long id);
+
+    Page<Schedule> findAllByMeetingId(Long meetingId, Pageable pageable);
 }
