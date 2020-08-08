@@ -11,4 +11,6 @@ public interface MeetingService {
     Meeting findById(Long id);
 
     Page<Meeting> findAll(Pageable pageable);
+
+    void addAssociate(Meeting meeting, Long associateId, boolean moderator);
 }

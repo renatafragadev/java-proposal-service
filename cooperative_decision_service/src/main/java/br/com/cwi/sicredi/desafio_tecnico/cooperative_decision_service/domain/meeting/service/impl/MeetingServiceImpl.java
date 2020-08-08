@@ -1,6 +1,9 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.impl;
 
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Associate;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.service.AssociateService;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Meeting;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.MeetingHasAssociate;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.repository.MeetingRepository;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.MeetingService;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.component.EntityValidator;
@@ -20,6 +23,8 @@ import java.util.Optional;
 public class MeetingServiceImpl implements MeetingService {
 
     private final MeetingRepository meetingRepository;
+
+    private final AssociateService associateService;
 
     private final EntityValidator entityValidator;
 
@@ -59,5 +64,19 @@ public class MeetingServiceImpl implements MeetingService {
         entityValidator.isEmpty(meetingPage.isEmpty());
 
         return meetingPage;
+    }
+
+    @Override
+    public void addAssociate(Meeting meeting, Long associateId, boolean moderator) {
+        log.info("Service - addAssociate | meeting: {} | associateId: {} | moderator: {}", meeting, associateId,
+                moderator);
+
+        Associate associate = associateService.findById(associateId);
+        MeetingHasAssociate meetingHasAssociate = new MeetingHasAssociate(associate, meeting, moderator);
+
+        entityValidator.isConflicting(!meeting.getAssociates().add(meetingHasAssociate), Meeting.class.getSimpleName(),
+                "associate");
+
+        meetingRepository.save(meeting);
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -76,5 +77,17 @@ public class SessionServiceImpl implements SessionService {
         entityValidator.isEmpty(sessionPage.isEmpty());
 
         return sessionPage;
+    }
+
+    @Override
+    public void validateIfCurrent(Session session) {
+        log.info("Service - validateIfCurrent | session: {}", session);
+
+        LocalDateTime dateTimeWithoutSeconds = LocalDateTime.now().withSecond(0).withNano(0);
+
+        if (session.getStartDateTime().isAfter(dateTimeWithoutSeconds) ||
+                session.getEndDateTime().isBefore(dateTimeWithoutSeconds)) {
+            throw new BusinessException(I18nMessage.SESSION_UNAVAILABLE.getKey(), Session.class.getSimpleName());
+        }
     }
 }
