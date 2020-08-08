@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class Associate {
+public class Associate implements Serializable {
+
+    private static final long serialVersionUID = -8631006634357189566L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +40,16 @@ public class Associate {
 
     @OneToMany(mappedBy = "associate")
     private Set<Vote> votes = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Associate{" +
+                "id=" + id +
+                ", document='" + document + '\'' +
+                ", documentType=" + documentType +
+                ", name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                ", enabled=" + enabled +
+                '}';
+    }
 }

@@ -11,4 +11,6 @@ public interface SessionService {
     Session findById(Long id);
 
     Page<Session> findAll(Pageable pageable);
+
+    void validateIfCurrentSession(Session session);
 }

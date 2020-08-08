@@ -4,4 +4,6 @@ import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.as
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface AssociateRepository extends PagingAndSortingRepository<Associate, Long> {
+
+    boolean existsByDocument(String document);
 }

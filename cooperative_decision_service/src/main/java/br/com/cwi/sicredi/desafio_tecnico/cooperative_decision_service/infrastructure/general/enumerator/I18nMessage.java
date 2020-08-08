@@ -7,7 +7,9 @@ public enum  I18nMessage {
     SESSION_ALREADY_EXISTS("error.business.session.exists"),
     START_DATETIME_BEFORE_NOW("error.business.session.start_date_time.before_now"),
     START_DATETIME_BEFORE_MEETING("error.business.session.start_date_time.before_meeting"),
-    END_DATETIME_BEFORE_START_DATETIME("error.business.session.end_date_time.before_start_date");
+    END_DATETIME_BEFORE_START_DATETIME("error.business.session.end_date_time.before_start_date"),
+    VOTE_ALREADY_EXITS("error.business.vote.exists"),
+    SESSION_ENDED("error.business.session.ended");
 
     private final String key;
 
