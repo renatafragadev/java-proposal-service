@@ -38,20 +38,30 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule findById(Long scheduleId) {
-        log.info("Service - findById | scheduleId: {}", scheduleId);
+    public Schedule findById(Long id) {
+        log.info("Service - findById | id: {}", id);
 
-        Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
+        Optional<Schedule> scheduleOptional = scheduleRepository.findById(id);
         entityValidator.isNonexistent(scheduleOptional.isPresent(), Schedule.class.getSimpleName());
 
         return scheduleOptional.get();
     }
 
     @Override
-    public Page<Schedule> findAll(Pageable pageable) {
-        log.info("Service - findAll | pageable: {}", pageable);
+    public Schedule findByMeetingIdAndId(Long meetingId, Long id) {
+        log.info("Service - findByMeetingIdAndId | meetingId: {} | id: {}", meetingId, id);
 
-        Page<Schedule> schedulePage = scheduleRepository.findAll(pageable);
+        Optional<Schedule> scheduleOptional = scheduleRepository.findByMeetingIdAndId(meetingId, id);
+        entityValidator.isNonexistent(scheduleOptional.isPresent(), Schedule.class.getSimpleName());
+
+        return scheduleOptional.get();
+    }
+
+    @Override
+    public Page<Schedule> findAllByMeetingId(Long meetingId, Pageable pageable) {
+        log.info("Service - findAllByMeetingId | meetingId: {} | pageable: {}", meetingId, pageable);
+
+        Page<Schedule> schedulePage = scheduleRepository.findByMeetingId(meetingId, pageable);
         entityValidator.isEmpty(schedulePage.isEmpty());
 
         return schedulePage;

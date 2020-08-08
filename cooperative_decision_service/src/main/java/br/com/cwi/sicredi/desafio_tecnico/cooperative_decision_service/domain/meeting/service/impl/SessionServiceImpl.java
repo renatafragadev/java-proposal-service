@@ -53,7 +53,6 @@ public class SessionServiceImpl implements SessionService {
                         Session.class.getSimpleName());
             }
         }
-
         if(session.getStartDateTime().isBefore(session.getSchedule().getMeeting().getEventDate())) {
             throw new BusinessException(I18nMessage.START_DATETIME_BEFORE_MEETING.getKey(), Session.class.getSimpleName());
         }
