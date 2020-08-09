@@ -7,7 +7,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.text.MessageFormat;
 
 @Lazy
 @RequiredArgsConstructor
@@ -25,9 +24,5 @@ public class MessageComponent {
 
     public String get(String code) {
         return accessor.getMessage(code);
-    }
-
-    public String getWithFields(String code, String... fields) {
-        return MessageFormat.format(accessor.getMessage(code), fields);
     }
 }

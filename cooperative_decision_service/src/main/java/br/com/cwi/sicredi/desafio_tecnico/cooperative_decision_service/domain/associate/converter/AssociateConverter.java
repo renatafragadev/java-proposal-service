@@ -10,7 +10,6 @@ public class AssociateConverter {
         associate.setDocument(associateRequest.getDocument());
         associate.setName(associateRequest.getName());
         associate.setBirthDate(associateRequest.getBirthDate());
-        associate.setEnabled(associateRequest.getEnabled());
 
         return associate;
     }

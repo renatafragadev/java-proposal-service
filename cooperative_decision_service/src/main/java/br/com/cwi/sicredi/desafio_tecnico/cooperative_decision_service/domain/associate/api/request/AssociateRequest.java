@@ -25,7 +25,4 @@ public class AssociateRequest {
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-
-    @NotNull
-    private Boolean enabled;
 }

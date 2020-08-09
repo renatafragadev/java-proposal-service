@@ -7,6 +7,7 @@ import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.me
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.component.EntityValidator;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.enumerator.I18nMessage;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.exception.BusinessException;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.integration.user_info.component.UserInfoIntegrationComponent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ public class AssociateServiceImpl implements AssociateService {
 
     private final AssociateRepository associateRepository;
 
+    private final UserInfoIntegrationComponent userInfoIntegration;
+
     private final EntityValidator entityValidator;
 
     @Override
@@ -30,6 +33,8 @@ public class AssociateServiceImpl implements AssociateService {
 
         entityValidator.isConflicting(associateRepository.existsByDocument(associate.getDocument()),
                 Associate.class.getSimpleName(), "document");
+
+        enabled(associate);
 
         return associateRepository.save(associate);
     }
@@ -71,5 +76,12 @@ public class AssociateServiceImpl implements AssociateService {
             throw new BusinessException(I18nMessage.ASSOCIATE_NOT_GUEST_MEETING.getKey(), Associate.class
                     .getSimpleName());
         }
+    }
+
+    @Override
+    public void enabled(Associate associate) {
+        log.info("Service - enabled | associate: {}", associate);
+
+        associate.setEnabled(userInfoIntegration.validateDocument(associate.getDocument()));
     }
 }
