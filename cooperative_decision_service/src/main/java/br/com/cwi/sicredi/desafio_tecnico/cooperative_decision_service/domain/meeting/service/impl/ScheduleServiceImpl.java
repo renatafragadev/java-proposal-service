@@ -6,6 +6,7 @@ import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.me
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.repository.ScheduleRepository;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.ScheduleService;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.component.EntityValidator;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.integration.messaging.component.CountingVoteMessageProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return meeting.getSchedules().stream().filter(s -> s.getTitle().equals(schedule.getTitle()))
                 .findFirst().get();
+    }
+
+    @Override
+    public void update(Schedule schedule) {
+        log.info("Service - update | schedule: {}", schedule);
+
+        scheduleRepository.save(schedule);
     }
 
     @Override

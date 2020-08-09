@@ -33,6 +33,8 @@ public class Schedule implements Serializable {
     @OneToOne(mappedBy = "schedule")
     private Session session;
 
+    private Boolean approved;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

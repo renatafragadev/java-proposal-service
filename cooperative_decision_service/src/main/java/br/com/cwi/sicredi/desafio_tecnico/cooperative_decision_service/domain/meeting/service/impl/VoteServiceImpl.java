@@ -1,11 +1,13 @@
-package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.service.impl;
+package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.impl;
 
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Associate;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Vote;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.repository.VoteRepository;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.bo.CountingVoteBO;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Vote;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.repository.VoteRepository;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.service.AssociateService;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.service.VoteService;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.VoteService;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Session;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.enumerator.DecisionType;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.SessionService;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.component.EntityValidator;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.enumerator.I18nMessage;
@@ -14,12 +16,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.specification.VoteSpecification.byAssociateId;
-import static br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.specification.VoteSpecification.bySessionId;
+import static br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.specification.VoteSpecification.byAssociateId;
+import static br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.specification.VoteSpecification.bySessionId;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Slf4j
@@ -91,5 +95,31 @@ public class VoteServiceImpl implements VoteService {
         entityValidator.isEmpty(votePage.isEmpty());
 
         return votePage;
+    }
+
+    @Scheduled(cron = "${cron.count-votes}")
+    @Override
+    public void countClosedSessionCron() {
+        log.warn("Service - count closed session cron - start");
+
+        LocalDateTime dateTimeWithoutSeconds = LocalDateTime.now().withSecond(0).withNano(0);
+
+        sessionService.findByEndDateTime(dateTimeWithoutSeconds).forEach(session ->
+                sessionService.forwardResult(session, countBySession(session)));
+
+        log.warn("Service - count closed session cron - end");
+    }
+
+    @Override
+    public CountingVoteBO countBySession(Session session) {
+        log.info("Service - countBySession | session: {}", session);
+
+        return CountingVoteBO.builder()
+                .total(voteRepository.countBySession(session))
+                .totalNo(voteRepository.countBySessionAndDecision(session, DecisionType.NO))
+                .totalYes(voteRepository.countBySessionAndDecision(session, DecisionType.YES))
+                .eligibleVoters(session.getSchedule().getMeeting().getAssociates().size())
+                .session(session)
+                .build();
     }
 }

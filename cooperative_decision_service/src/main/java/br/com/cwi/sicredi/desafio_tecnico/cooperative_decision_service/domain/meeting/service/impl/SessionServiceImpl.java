@@ -1,5 +1,6 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.impl;
 
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.bo.CountingVoteBO;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Schedule;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Session;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.repository.SessionRepository;
@@ -8,6 +9,8 @@ import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.me
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.component.EntityValidator;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.enumerator.I18nMessage;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.exception.BusinessException;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.integration.messaging.component.CountingVoteMessageProducer;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.integration.messaging.converter.CountingVoteMessageConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,6 +30,8 @@ public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
 
     private final ScheduleService scheduleService;
+
+    private final CountingVoteMessageProducer countingVoteMessageProducer;
 
     private final EntityValidator entityValidator;
 
@@ -89,5 +95,22 @@ public class SessionServiceImpl implements SessionService {
                 session.getEndDateTime().isBefore(dateTimeWithoutSeconds)) {
             throw new BusinessException(I18nMessage.SESSION_UNAVAILABLE.getKey(), Session.class.getSimpleName());
         }
+    }
+
+    @Override
+    public List<Session> findByEndDateTime(LocalDateTime endDateTime) {
+        log.info("Service - findByEndDateTime | endDateTime: {}", endDateTime);
+
+        return sessionRepository.findByEndDateTime(endDateTime);
+    }
+
+    @Override
+    public void forwardResult(Session session, CountingVoteBO countingVoteBO) {
+        log.info("Service - forwardResult | countingVoteBO: {}", countingVoteBO);
+
+        session.getSchedule().setApproved(countingVoteBO.getTotalYes() > countingVoteBO.getTotalNo());
+        scheduleService.update(session.getSchedule());
+
+        countingVoteMessageProducer.send(CountingVoteMessageConverter.toMessage(countingVoteBO));
     }
 }

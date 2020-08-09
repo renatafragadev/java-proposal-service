@@ -1,6 +1,5 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity;
 
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Vote;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,4 +34,13 @@ public class Session implements Serializable {
 
     @OneToMany(mappedBy = "session")
     private Set<Vote> votes = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "id=" + id +
+                ", startDateTime=" + startDateTime +
+                ", endDateTime=" + endDateTime +
+                '}';
+    }
 }
