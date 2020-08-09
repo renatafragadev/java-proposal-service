@@ -17,4 +17,5 @@ public interface AssociateService {
 
     void validateIfInvitedMeeting(Associate associate, Meeting meeting);
 
+    void enabled(Associate associate);
 }

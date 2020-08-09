@@ -78,7 +78,6 @@ public class HttpExceptionHandler extends AbstractHttpExceptionHandler {
     @ExceptionHandler({ServiceUnavailableException.class})
     public ResponseEntity<Object> handleServiceUnavailableException(ServiceUnavailableException ex) {
         HttpErrorResponseDetail detail = HttpErrorResponseDetail.builder()
-                .resource(ex.getResource())
                 .message(messageComponent.get(ex.getMessage()))
                 .code(ErrorCode.THIRD_SERVICE_ERROR).build();
 
