@@ -1,10 +1,10 @@
-package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.api.v1;
+package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.v1;
 
 
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.api.request.VoteRequest;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.converter.VoteConverter;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Vote;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.service.VoteService;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.request.VoteRequest;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.converter.VoteConverter;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Vote;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.VoteService;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.converter.URIGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

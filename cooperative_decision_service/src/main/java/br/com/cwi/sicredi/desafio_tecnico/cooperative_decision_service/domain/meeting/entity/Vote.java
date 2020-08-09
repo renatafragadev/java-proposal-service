@@ -1,6 +1,6 @@
-package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity;
+package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity;
 
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Session;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Associate;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.enumerator.DecisionType;
 import lombok.Getter;
 import lombok.Setter;

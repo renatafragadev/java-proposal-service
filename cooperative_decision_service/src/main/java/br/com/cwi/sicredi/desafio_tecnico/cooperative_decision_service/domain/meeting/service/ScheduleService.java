@@ -9,6 +9,8 @@ public interface ScheduleService {
 
     Schedule add(Meeting meeting, Schedule schedule);
 
+    void update(Schedule schedule);
+
     Schedule findById(Long scheduleId);
 
     Schedule findByMeetingIdAndId(Long meetingId, Long id);

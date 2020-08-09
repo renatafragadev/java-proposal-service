@@ -1,7 +1,7 @@
-package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.specification;
+package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.specification;
 
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Associate_;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity.Vote;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Vote;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Session_;
 import org.springframework.data.jpa.domain.Specification;
 

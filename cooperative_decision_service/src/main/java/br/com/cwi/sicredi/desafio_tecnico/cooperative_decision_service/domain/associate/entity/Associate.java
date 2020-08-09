@@ -1,12 +1,11 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.entity;
 
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.MeetingHasAssociate;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Vote;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;

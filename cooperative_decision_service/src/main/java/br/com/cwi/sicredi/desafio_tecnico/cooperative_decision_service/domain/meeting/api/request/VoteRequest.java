@@ -1,4 +1,4 @@
-package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.associate.api.request;
+package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.request;
 
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.enumerator.DecisionType;
 import lombok.Getter;
