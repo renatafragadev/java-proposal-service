@@ -11,12 +11,12 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-public class CountingVoteMessage {
+public class AccurateSessionMessage {
 
-    private int eligibleVoters;
-    private int total;
-    private int totalYes;
-    private int totalNo;
+    private long eligibleVoters;
+    private long total;
+    private long totalYes;
+    private long totalNo;
     private Map<String, Object> session;
 
 }

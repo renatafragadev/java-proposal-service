@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -32,8 +31,7 @@ public class Meeting implements Serializable {
 
     private LocalDateTime eventDate;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
-    @JoinColumn(name = "meeting_id")
+    @OneToMany(mappedBy = "meeting")
     private Set<Schedule> schedules = new HashSet<>();
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "meeting")

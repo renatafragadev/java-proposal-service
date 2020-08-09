@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -36,24 +35,12 @@ public class Schedule implements Serializable {
     private Boolean approved;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Schedule schedule = (Schedule) o;
-        return Objects.equals(title, schedule.title);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title);
-    }
-
-    @Override
     public String toString() {
         return "Schedule{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", approved=" + approved +
                 '}';
     }
 }

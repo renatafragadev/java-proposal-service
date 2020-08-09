@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,6 +37,8 @@ public class AssociateServiceImpl implements AssociateService {
 
         enabled(associate);
 
+        associate.setUuid(UUID.randomUUID().toString());
+
         return associateRepository.save(associate);
     }
 
@@ -44,6 +47,16 @@ public class AssociateServiceImpl implements AssociateService {
         log.info("Service - findById | id: {}", id);
 
         Optional<Associate> associateOptional = associateRepository.findById(id);
+        entityValidator.isNonexistent(associateOptional.isPresent(), Associate.class.getSimpleName());
+
+        return associateOptional.get();
+    }
+
+    @Override
+    public Associate findByUuid(String uuid) {
+        log.info("Service - findByUuid | uuid: {}", uuid);
+
+        Optional<Associate> associateOptional = associateRepository.findByUuid(uuid);
         entityValidator.isNonexistent(associateOptional.isPresent(), Associate.class.getSimpleName());
 
         return associateOptional.get();

@@ -23,8 +23,4 @@ public class VoteRequest {
     @Min(1)
     @NotNull
     private Long associateId;
-
-    @Min(1)
-    @NotNull
-    private Long sessionId;
 }

@@ -8,7 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface VoteRepository extends PagingAndSortingRepository<Vote, Long>, JpaSpecificationExecutor<Vote> {
 
-    boolean existsByAssociateIdAndSessionId(Long associateId, Long sessionId);
+    boolean existsByAssociateIdAndSession(Long associateId, Session session);
 
     int countBySessionAndDecision(Session session, DecisionType decision);
 

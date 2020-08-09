@@ -11,6 +11,8 @@ public interface AssociateService {
 
     Associate findById(Long id);
 
+    Associate findByUuid(String uuid);
+
     Page<Associate> findAll(Pageable pageable);
 
     void validateIfEnabled(Associate associate);

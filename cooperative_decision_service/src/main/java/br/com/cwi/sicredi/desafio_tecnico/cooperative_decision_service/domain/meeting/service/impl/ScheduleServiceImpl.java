@@ -1,12 +1,10 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.impl;
 
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Meeting;
+import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.bo.AccurateSessionBO;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Schedule;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.repository.MeetingRepository;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.repository.ScheduleRepository;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.service.ScheduleService;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.infrastructure.general.component.EntityValidator;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.integration.messaging.component.CountingVoteMessageProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,29 +18,18 @@ import java.util.Optional;
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
-    private final MeetingRepository meetingRepository;
     private final ScheduleRepository scheduleRepository;
 
     private final EntityValidator entityValidator;
 
     @Override
-    public Schedule add(Meeting meeting, Schedule schedule) {
-        log.info("Service - add | meeting: {} | schedule: {}", meeting, schedule);
+    public Schedule create(Schedule schedule) {
+        log.info("Service - create | schedule: {}", schedule);
 
-        entityValidator.isConflicting(!meeting.getSchedules().add(schedule), Schedule.class.getSimpleName(),
-                "title");
+        entityValidator.isConflicting(scheduleRepository.existsByMeetingAndTitle(schedule.getMeeting(),
+                schedule.getTitle()), Schedule.class.getSimpleName(), "title");
 
-        meeting = meetingRepository.save(meeting);
-
-        return meeting.getSchedules().stream().filter(s -> s.getTitle().equals(schedule.getTitle()))
-                .findFirst().get();
-    }
-
-    @Override
-    public void update(Schedule schedule) {
-        log.info("Service - update | schedule: {}", schedule);
-
-        scheduleRepository.save(schedule);
+        return scheduleRepository.save(schedule);
     }
 
     @Override
@@ -73,5 +60,15 @@ public class ScheduleServiceImpl implements ScheduleService {
         entityValidator.isEmpty(schedulePage.isEmpty());
 
         return schedulePage;
+    }
+
+    @Override
+    public void updateApproved(AccurateSessionBO accurateSessionBO) {
+        log.info("Service - updateApproved | accurateSessionBO: {}", accurateSessionBO);
+
+        Schedule schedule = accurateSessionBO.getSession().getSchedule();
+        schedule.setApproved(accurateSessionBO.getTotalYes() > accurateSessionBO.getTotalNo());
+
+        scheduleRepository.save(schedule);
     }
 }

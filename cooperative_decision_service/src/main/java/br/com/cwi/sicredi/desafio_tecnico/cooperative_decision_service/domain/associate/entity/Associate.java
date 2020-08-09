@@ -34,6 +34,8 @@ public class Associate implements Serializable {
 
     private Boolean enabled;
 
+    private String uuid;
+
     @OneToMany(mappedBy = "associate")
     private Set<Vote> votes = new HashSet<>();
 
@@ -48,6 +50,7 @@ public class Associate implements Serializable {
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
                 ", enabled=" + enabled +
+                ", uuid='" + uuid + '\'' +
                 '}';
     }
 }

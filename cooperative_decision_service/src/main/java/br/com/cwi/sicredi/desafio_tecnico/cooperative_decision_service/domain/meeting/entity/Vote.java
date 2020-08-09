@@ -36,11 +36,12 @@ public class Vote implements Serializable {
 
     private String seem;
 
-
     @Override
     public String toString() {
         return "Vote{" +
                 "id=" + id +
+                ", session=" + session +
+                ", associate=" + associate +
                 ", decision=" + decision +
                 ", seem='" + seem + '\'' +
                 '}';

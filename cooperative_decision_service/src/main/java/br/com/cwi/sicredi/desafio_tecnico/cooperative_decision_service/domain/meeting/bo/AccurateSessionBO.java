@@ -8,11 +8,11 @@ import lombok.ToString;
 @Builder
 @Getter
 @ToString
-public class CountingVoteBO {
+public class AccurateSessionBO {
 
-    private int eligibleVoters;
-    private int total;
-    private int totalYes;
-    private int totalNo;
     private Session session;
+    private long eligibleVoters;
+    private long total;
+    private long totalYes;
+    private long totalNo;
 }
