@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -21,6 +22,6 @@ public class AssociateModel {
     private String name;
     private String birthDate;
     private Boolean enabled;
-    private Set<Vote> votes;
-    private Set<Meeting> meetings;
+    private Set<Vote> votes = new HashSet<>();
+    private Set<Meeting> meetings = new HashSet<>();
 }

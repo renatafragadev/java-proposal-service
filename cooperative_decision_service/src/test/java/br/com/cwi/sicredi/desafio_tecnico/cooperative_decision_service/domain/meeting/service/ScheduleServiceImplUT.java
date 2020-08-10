@@ -25,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,33 +90,37 @@ public class ScheduleServiceImplUT extends BaseUnitTest {
             Schedule schedule = new Schedule();
             schedule.setTitle(FAKER.beer().hop());
             schedule.setDescription(FAKER.beer().name());
-
-            Meeting meetingWithScheduleAdded = meetingWithoutSchedules;
-            meetingWithScheduleAdded.getSchedules().add(schedule);
+            schedule.setMeeting(meetingWithoutSchedules);
 
             doNothing().when(entityValidator).isConflicting(anyBoolean(), anyString(), anyString());
-            when(meetingRepository.save(any(Meeting.class))).thenReturn(meetingWithScheduleAdded);
+            when(scheduleRepository.existsByMeetingAndTitle(any(Meeting.class), anyString())).thenReturn(false);
+            when(scheduleRepository.save(any(Schedule.class))).thenReturn(schedule);
 
-           // Schedule scheduleResp = scheduleService.create(meetingWithoutSchedules, schedule);
+            Schedule scheduleResp = scheduleService.create(schedule);
 
-          //  assertNotNull(scheduleResp);
+            assertNotNull(scheduleResp);
 
             verify(entityValidator, times(1)).isConflicting(anyBoolean(), anyString(),
                     anyString());
-            verify(meetingRepository, times(1)).save(any(Meeting.class));
+            verify(scheduleRepository, times(1)).existsByMeetingAndTitle(any(Meeting.class),
+                    anyString());
+            verify(scheduleRepository, times(1)).save(any(Schedule.class));
         }
 
         @DisplayName("Should return error because schedule already exists")
         @Test
         void create_ExistingSchedule_ThrowConflictException() {
+            when(scheduleRepository.existsByMeetingAndTitle(any(Meeting.class), anyString())).thenReturn(true);
             doThrow(ConflictException.class).when(entityValidator).isConflicting(anyBoolean(), anyString(),
                     anyString());
 
-           // assertThrows(ConflictException.class, () -> scheduleService.add(meetingWithSchedules, schedule1));
+             assertThrows(ConflictException.class, () -> scheduleService.create(schedule1));
 
             verify(entityValidator, times(1)).isConflicting(anyBoolean(), anyString(),
                     anyString());
-            verify(meetingRepository, times(0)).save(any(Meeting.class));
+            verify(scheduleRepository, times(1)).existsByMeetingAndTitle(any(Meeting.class),
+                    anyString());
+            verify(scheduleRepository, times(0)).save(any(Schedule.class));
         }
     }
 
@@ -235,18 +238,19 @@ public class ScheduleServiceImplUT extends BaseUnitTest {
         schedule1.setId(60L);
         schedule1.setTitle(FAKER.gameOfThrones().dragon());
         schedule1.setDescription(FAKER.gameOfThrones().city());
+        schedule1.setMeeting(meetingWithSchedules);
 
         schedule2 = new Schedule();
         schedule2.setId(61L);
         schedule2.setTitle(FAKER.country().name());
         schedule2.setDescription(FAKER.country().capital());
+        schedule2.setMeeting(meetingWithSchedules);
 
         schedule3 = new Schedule();
         schedule3.setId(62L);
         schedule3.setTitle(FAKER.backToTheFuture().character());
         schedule3.setDescription(FAKER.backToTheFuture().quote());
-
-        meetingWithSchedules.getSchedules().addAll(Arrays.asList(schedule1, schedule2, schedule3));
+        schedule3.setMeeting(meetingWithSchedules);
     }
 
     private void createSchedulePage() {

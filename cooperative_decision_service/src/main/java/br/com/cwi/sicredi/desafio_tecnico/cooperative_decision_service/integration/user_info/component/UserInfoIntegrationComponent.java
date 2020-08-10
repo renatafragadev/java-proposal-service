@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Duration;
+
 @Slf4j
 @Lazy
 @Component
@@ -37,6 +39,7 @@ public class UserInfoIntegrationComponent {
                     throw new ServiceUnavailableException(I18nMessage.SESSION_UNAVAILABLE.getKey());
                 })
                 .bodyToMono(VoteStatusResponse.class)
+                .timeout(Duration.ofMinutes(1))
                 .block();
 
         return statusResponseMono.getStatus().equals(VoteStatus.ABLE_TO_VOTE);

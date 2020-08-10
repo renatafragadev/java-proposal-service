@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Set;
-
 @Getter
 @Setter
 @ToString
@@ -16,6 +14,4 @@ public class SessionModel {
     private Long id;
     private String startDateTime;
     private String endDateTime;
-    private Set<VoteModel> votes;
-
 }

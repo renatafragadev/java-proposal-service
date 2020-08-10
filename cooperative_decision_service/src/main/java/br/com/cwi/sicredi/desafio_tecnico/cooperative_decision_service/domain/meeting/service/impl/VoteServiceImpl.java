@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.specification.VoteSpecification.byAssociateId;
@@ -72,10 +73,16 @@ public class VoteServiceImpl implements VoteService {
         log.info("Service - findByAssociateId | associateId: {} | sessionId: {} | pageable: {}", associateId,
                 sessionId, pageable);
 
-        Page<Vote> votePage = voteRepository.findAll(where(byAssociateId(associateId)).or(bySessionId(sessionId)),
-                pageable);
-        entityValidator.isEmpty(votePage.isEmpty());
+        Page<Vote> votePage;
 
+        if (Objects.nonNull(associateId) && Objects.nonNull(sessionId)) {
+            votePage = voteRepository.findAll(where(byAssociateId(associateId).and(bySessionId(sessionId))),
+                    pageable);
+        } else {
+            votePage = voteRepository.findAll(where(byAssociateId(associateId)), pageable);
+        }
+
+        entityValidator.isEmpty(votePage.isEmpty());
         return votePage;
     }
 }
