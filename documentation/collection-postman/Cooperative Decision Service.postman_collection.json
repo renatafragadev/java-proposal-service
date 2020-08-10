@@ -1,0 +1,645 @@
+{
+	"info": {
+		"_postman_id": "f9925c3f-7e3e-48c8-a4f5-33bf2c790739",
+		"name": "Cooperative Decision Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "meeting",
+			"item": [
+				{
+					"name": "Create Meeting",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Economia vs bem estar\",\n    \"description\": \"Discutiremos algumas medidas a serem tomadas na pandemia\",\n    \"eventDate\": \"2020-08-09 16:46\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/meetings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"meetings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Associate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "associateId",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "moderator",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/meetings/3/associates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"meetings",
+								"3",
+								"associates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById Meeting",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/meetings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"meetings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindAll Meeting",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "pt-BR"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/meetings?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"meetings"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "schedule",
+			"item": [
+				{
+					"name": "Create Schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Palestrar toda semana\",\n    \"description\": \"palestras mensais\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/meetings/3/schedules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"meetings",
+								"3",
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindByMeetingIdAndId Schedule",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "pt-BR"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/meetings/1/schedules/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"meetings",
+								"1",
+								"schedules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindByMeetingId Schedule",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "pt-BR"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/meetings/1/schedules?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"meetings",
+								"1",
+								"schedules"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "session",
+			"item": [
+				{
+					"name": "Create Session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"startDateTime\": \"2020-08-09 17:09\",\n    \"endDateTime\": \"2020-08-09 17:15\",\n    \"scheduleId\": 7\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accurate Session",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/sessions/5/accurate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"sessions",
+								"5",
+								"accurate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById Session",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "en-US"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/sessions/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"sessions",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindAll Session",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "en-US"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/sessions?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "associate",
+			"item": [
+				{
+					"name": "Create Associate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"document\": \"97115591024\",\n    \"name\": \"Testeee da Silva\",\n    \"birthDate\": \"1996-11-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/associates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"associates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById Associate",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/associates/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"associates",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById Associate Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "pt-BR",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/associates?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"associates"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindByUUID Associate",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "pt-BR"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v2/associates/5d4cc5ec-0010-477d-af52-bee613b1f7d8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v2",
+								"associates",
+								"5d4cc5ec-0010-477d-af52-bee613b1f7d8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "vote",
+			"item": [
+				{
+					"name": "Create Vote",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"decision\": \"YES\",\n    \"seem\": \"sem comentarios\",\n    \"associateId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/sessions/6/votes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"sessions",
+								"6",
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById Vote",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "en-US"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/votes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"votes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Vote",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "en-US"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/cooperative-decision/v1/votes?associateId=1&sessionId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"cooperative-decision",
+								"v1",
+								"votes"
+							],
+							"query": [
+								{
+									"key": "associateId",
+									"value": "1"
+								},
+								{
+									"key": "sessionId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User Info Verify CPF",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://user-info.herokuapp.com/users/34678208089",
+					"protocol": "https",
+					"host": [
+						"user-info",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"34678208089"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

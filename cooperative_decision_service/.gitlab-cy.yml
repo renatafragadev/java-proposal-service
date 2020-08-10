@@ -1,0 +1,14 @@
+stages:
+  - Running-Unit-Tests
+
+Running-Unit-Tests:
+  stage: Running-Unit-Tests
+  image: adoptopenjdk/maven-openjdk11:latest
+  coverage: /Jacoco-Test-Coverage:(\d+\.?\d+)%/
+  script:
+    - mvn test
+    - cat ./target/site/jacoco/index.html | grep -o 'Total[^%]*%' | grep -o '[0-9]\+%' | awk '{print "Jacoco-Test-Coverage:"$1}'
+  only:
+    - merge_requests
+    - develop
+    - master
