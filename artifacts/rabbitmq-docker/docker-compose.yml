@@ -1,0 +1,17 @@
+version: "3"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbit
+    restart: unless-stopped
+    ports:
+      - "7100:15672"
+      - "5672:5672"
+    volumes:
+      - rabbitmq-storage:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+      - RABBITMQ_ERLANG_COOKIE="MY-SECRET-KEY-123"
+volumes:
+  rabbitmq-storage:
