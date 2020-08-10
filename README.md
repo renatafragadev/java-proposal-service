@@ -5,7 +5,7 @@
 ### Stack
 - Java 11
 - Spring Boot 2.2.9 RELEASE
-- Spring AMQP
+- Spring AMQP (RabbitMQ)
 - JPA
 - Lombok
 - Junit
@@ -16,6 +16,11 @@
 - Faker
 - Maven
 - Jacoco
+
+## Orientações sobre RabbitMQ
+- Arquivo com imagem do RabbitMQ /artifacts/rabbitmq-docker
+- Criar virtual host: meeting
+Obs: As filas estão sendo criadas dentro da aplicação afim de auxiliar na avaliação.  
 
 ## Orientações e regras para uso da API
 ### Meeting: Assembléia
