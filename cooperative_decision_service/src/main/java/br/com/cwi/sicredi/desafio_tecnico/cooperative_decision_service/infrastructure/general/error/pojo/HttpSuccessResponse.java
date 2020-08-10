@@ -12,10 +12,10 @@ public class HttpSuccessResponse implements Serializable {
     private static final long serialVersionUID = -4958610313897546027L;
 
     private final String status;
-    private final Object object;
+    private final Object response;
 
-    public HttpSuccessResponse(Object object) {
+    public HttpSuccessResponse(Object response) {
         this.status = "success";
-        this.object = object;
+        this.response = response;
     }
 }

@@ -22,7 +22,7 @@ public class AssociateControllerV2 {
 
     private final AssociateService associateService;
 
-    @GetMapping(path = "/{uuid}")
+    @GetMapping(value = "/{uuid}")
     public ResponseEntity<Object> findByUuid(@PathVariable String uuid) {
         log.info("Controller - findByUuid | uuid: {}", uuid);
 

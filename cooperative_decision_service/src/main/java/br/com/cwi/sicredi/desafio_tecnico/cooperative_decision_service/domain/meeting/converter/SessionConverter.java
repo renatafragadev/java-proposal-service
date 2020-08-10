@@ -1,7 +1,6 @@
 package br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.converter;
 
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.model.SessionModel;
-import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.model.VoteModel;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.api.request.SessionRequest;
 import br.com.cwi.sicredi.desafio_tecnico.cooperative_decision_service.domain.meeting.entity.Session;
 
@@ -9,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public class SessionConverter {
 
@@ -29,7 +27,6 @@ public class SessionConverter {
         sessionModel.setId(session.getId());
         sessionModel.setStartDateTime(session.getStartDateTime().format(DATE_TIME_FORMATTER));
         sessionModel.setEndDateTime(session.getEndDateTime().format(DATE_TIME_FORMATTER));
-        sessionModel.setVotes((Set<VoteModel>) VoteConverter.toListModel(session.getVotes()));
 
         return sessionModel;
     }

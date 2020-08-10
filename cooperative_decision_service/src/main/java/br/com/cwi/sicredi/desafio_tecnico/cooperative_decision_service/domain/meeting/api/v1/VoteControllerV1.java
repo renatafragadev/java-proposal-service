@@ -62,7 +62,7 @@ public class VoteControllerV1 {
     }
 
     @GetMapping(path = "/votes")
-    public ResponseEntity<Object> find(@RequestParam(required = false) Long associateId,
+    public ResponseEntity<Object> find(@RequestParam Long associateId,
                                        @RequestParam(required = false) Long sessionId,
                                        @RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size) {

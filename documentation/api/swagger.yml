@@ -1,0 +1,193 @@
+openapi: 3.0.1
+info:
+  title: Cooperative Decision Service
+  description: Serviço de votações em assembléias
+  version: 0.0.1
+externalDocs:
+  description: Veja também a documentação de messageria 
+  url:  https://gitlab.com/renata_fraga/desafio-tecnico-cwi/-/tree/develop/documentation/async/swagger.yml
+servers:
+- url: http://localhost:8888/cooperative-decision/v1
+- url: http://localhost:8888/cooperative-decision/v2
+tags:
+- name: Meeting
+  description: Assembléias
+- name: Schedule
+  description: Pautas das assembléias
+- name: Session
+  description: Sessão de votação de uma pauta
+- name: Vote
+  description: Voto de uma pauta
+- name: Associate
+  description: Cooperativado votante de uma pauta
+
+paths:
+  /meetings:
+    post:
+      tags:
+      - Meeting
+      summary: Criar assembléia
+      operationId: createMeeting
+      requestBody:
+        description: Criar assmembléia indicando data e hora
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeetingRequest'
+        required: true
+      responses:
+        201:
+          description: Assembléia incluida com sucesso
+          content: {}
+        400:
+          description: Inclusão de Campo Inválido
+          content: {}
+        409:
+          description: Assembléia com mesmo título e dia registrados
+          content: {}
+    get: 
+      tags:
+      - Meeting
+      summary: Listagem de assembléias
+      operationId: getMeeting
+      parameters:
+      - name: page
+        in: query
+        description: Número da página
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        description: Quantidade de assembléias por pagina
+        required: true
+        schema:
+          type: integer   
+          format: int32 
+      responses:
+        200:
+          description: Consulta realizada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MeetingModelList'
+        204:
+          description: Conteúdo não encontrado
+          content: {}    
+    
+  
+components:
+  schemas:
+    MeetingRequest:
+      type: object
+      required: 
+        - title
+        - eventDate
+      properties:
+        title: 
+          type: string
+          maxLength: 100
+          description: Título da assembléia
+        description:
+          type: string
+          maxLength: 255
+          description: Detalhes pertinentes a assembléia
+        eventDate:
+          type: string
+          format: yyyy-MM-dd hh:mm
+          description: Data e hora início da assembléia
+    MeetingHasAssociateRequest:
+      type: object
+      required: 
+        - associateId
+        - moderator
+      properties:
+        associateId:
+          type: integer
+          format: int64
+          minimum: 1
+          description: Identificador único do associado
+        moderator:
+          type: boolean
+          description: Indicador se o associado será ou não moderador da assembléia
+    MeetingModel: 
+      type: object
+      properties:
+        status:
+          type: string
+          default: success
+        id: 
+          type: integer
+          format: int64
+        title: 
+          type: string
+        description:
+          type: string
+        eventDate:
+          type: string
+          format: yyyy-MM-dd hh:mm
+    MeetingModelList:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeetingModel'
+        pageable:
+          type: object
+          properties:
+            sort:
+              type: object
+              properties:
+                sorted:
+                  type: boolean
+                  default: false
+                unsorted: 
+                  type: boolean
+                  default: true
+                empty:
+                  type: boolean
+            pageNumber:
+              type: integer
+            pageSize: 
+              type: integer
+            offset:
+              type: integer
+            paged: 
+              type: boolean
+              default: true
+            unpaged:                 
+              type: boolean
+              default: false
+        totalElements:
+          type: integer
+        last: 
+          type: boolean
+        totalPages:
+          type: integer
+        first: 
+          type: boolean
+        sort:
+          type: object
+          properties:
+            sorted: 
+              type: boolean
+              default: false
+            unsorted: 
+              type: boolean
+              default: true
+            empty: 
+              type: boolean
+        numberOfElements:
+          type: integer
+        size: 
+          type: integer
+        number:
+          type: integer
+        empty:
+          type: boolean   
+            
+  

@@ -11,6 +11,6 @@ import java.util.Locale;
 @ExtendWith(MockitoExtension.class)
 public class BaseUnitTest {
 
-    public final static Faker FAKER = new Faker(new Locale("en-US"));
+    protected final static Faker FAKER = new Faker(new Locale("en-US"));
 
 }
