@@ -54,6 +54,20 @@ Obs: As filas estão sendo criadas dentro da aplicação afim de auxiliar na ava
     - O serviço realiza uma consulta de CPF no serviço **user-info**. Caso o serviço responda ABLE_TO_VOTE o campo enabled recebe true caso contrário recebe false.
 
 
-
-
+### Aspectos gerais da aplicação
+Na implementação deste projeto foi prezado as seguintes práticas:
+- Tentativa de separar as entidades em domínio agregador e objetos de valor (DDD)
+- Uso otimizado do ORM buscando melhores práticas tanto na persistência quanto na consulta de dados
+- Tratamento de exceções 
+- Padrões REST (nível de maturidade 3): tratamento de erros, payload de resposta, códigos de resposta, URIs
+- Criação de anotações customizadas
+- Integração com barramento (RabbitMQ)
+- Integração com serviços externos via HTTP (utilizando WebClient)
+- Uso de componentes customizados a fim de prover baixo acoplamento 
+- Implementação de padrões de projeto (Builder, Converter, Singleton, Assembler Model, etc)
+- Testes unitários e de integração focado em camadas - agilidade e objetividade (não havendo necessidade de disponibilizar todo o contexto Spring, deixando os testes mais lentos) 
+- Versionamento dos scripts de base de dados 
+#### Pontos a melhorar:
+- Pelo tempo curto não pude realizar uma cobertura completa nos testes unitários, por isso, criei alguns em ambas camadas (web e service) com objetivo de mostrar meu conhecimento acerca do Mockito e o SpringExtension. Não achei pertinente no momento criar um teste de integração com a base de dados, porém se tivesse mais tempo teria utilizado o banco em memória.  
+- Documentação de API: pelo mesmo motivo consegui apenas fazer a introdução do Swagger,mas meu objetivo era ter feito a documentação de API e de filas utilizando AsyncAPI. 
 
