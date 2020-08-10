@@ -32,7 +32,7 @@ public class MeetingServiceImpl implements MeetingService {
     public Meeting create(Meeting meeting) {
         log.info("Service - create | meeting: {}", meeting);
 
-       validateTitleAndEventDate(meeting);
+        validateTitleAndEventDate(meeting);
 
         return meetingRepository.save(meeting);
     }
@@ -41,9 +41,8 @@ public class MeetingServiceImpl implements MeetingService {
         LocalDateTime startEventDate = LocalDateTime.of(meeting.getEventDate().toLocalDate(), LocalTime.MIDNIGHT);
         LocalDateTime endEventDate = LocalDateTime.of(meeting.getEventDate().toLocalDate(), LocalTime.MAX);
 
-        if (meetingRepository.existsByTitleAndEventDateBetween(meeting.getTitle(), startEventDate, endEventDate)) {
-            entityValidator.isConflicting(true, Meeting.class.getSimpleName(), "title,eventDate");
-        }
+        entityValidator.isConflicting(meetingRepository.existsByTitleAndEventDateBetween(meeting.getTitle(),
+                startEventDate, endEventDate), Meeting.class.getSimpleName(), "title,eventDate");
     }
 
     @Override

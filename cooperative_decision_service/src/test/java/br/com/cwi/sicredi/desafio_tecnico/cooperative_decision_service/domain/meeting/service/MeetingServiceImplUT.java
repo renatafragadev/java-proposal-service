@@ -90,9 +90,6 @@ public class MeetingServiceImplUT extends BaseUnitTest {
             Meeting meetingResp = meetingService.create(meeting);
 
             assertNotNull(meetingResp);
-
-            verify(entityValidator, times(0)).isConflicting(anyBoolean(), anyString(),
-                    anyString());
         }
 
         @DisplayName("Should throw exception because there is already a meeting with the same title and date")
