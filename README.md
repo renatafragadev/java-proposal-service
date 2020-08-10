@@ -17,12 +17,16 @@
 - Maven
 - Jacoco
 
+
 ## Orientações sobre RabbitMQ
 - Arquivo com imagem do RabbitMQ /artifacts/rabbitmq-docker
 - Criar virtual host: meeting
 Obs: As filas estão sendo criadas dentro da aplicação afim de auxiliar na avaliação.  
 
 ## Orientações e regras para uso da API
+
+A collection encontra-se no diretório documentation/collection-postman.
+
 ### Meeting: Assembléia
 - Criar uma assembléia
     - Não pode haver assembléia com o mesmo título e dia cadastrado
@@ -67,6 +71,8 @@ Na implementação deste projeto foi prezado as seguintes práticas:
 - Implementação de padrões de projeto (Builder, Converter, Singleton, Assembler Model, etc)
 - Testes unitários e de integração focado em camadas - agilidade e objetividade (não havendo necessidade de disponibilizar todo o contexto Spring, deixando os testes mais lentos) 
 - Versionamento dos scripts de base de dados 
+- Internacionalização das mensagens 
+
 #### Pontos a melhorar:
 - Pelo tempo curto não pude realizar uma cobertura completa nos testes unitários, por isso, criei alguns em ambas camadas (web e service) com objetivo de mostrar meu conhecimento acerca do Mockito e o SpringExtension. Não achei pertinente no momento criar um teste de integração com a base de dados, porém se tivesse mais tempo teria utilizado o banco em memória.  
 - Documentação de API: pelo mesmo motivo consegui apenas fazer a introdução do Swagger,mas meu objetivo era ter feito a documentação de API e de filas utilizando AsyncAPI. 
