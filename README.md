@@ -67,7 +67,7 @@ Na implementação deste projeto foi prezado as seguintes práticas:
 - Implementação de padrões de projeto (Builder, Converter, Singleton, Assembler Model, etc)
 - Testes unitários e de integração focado em camadas - agilidade e objetividade (não havendo necessidade de disponibilizar todo o contexto Spring, deixando os testes mais lentos) 
 - Versionamento dos scripts de base de dados 
-Pontos a melhorar:
+#### Pontos a melhorar:
 - Pelo tempo curto não pude realizar uma cobertura completa nos testes unitários, por isso, criei alguns em ambas camadas (web e service) com objetivo de mostrar meu conhecimento acerca do Mockito e o SpringExtension. Não achei pertinente no momento criar um teste de integração com a base de dados, porém se tivesse mais tempo teria utilizado o banco em memória.  
 - Documentação de API: pelo mesmo motivo consegui apenas fazer a introdução do Swagger,mas meu objetivo era ter feito a documentação de API e de filas utilizando AsyncAPI. 
 
